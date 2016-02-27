@@ -1,0 +1,37 @@
+// 用户属性协议
+// @author allenlinrui@qq.com
+// @time 2015-02-01
+
+pacakage amps;
+
+//用户属性
+message UserProperty {
+    //帐号相关
+    required string id = 1;          //ID
+	required string password = 2;    //密码
+    optional bool is_third_party = 3;//是否第三方帐号
+    
+    //属性相关
+    required string name = 10;        //姓名
+    optional string birthday = 11;    //生日
+    optional uint32 age = 12;         //年龄
+    optional uint32 gender = 13;      //性别
+    optional string img_url = 14;   //头像的图片链接
+    optional string tel = 15;       //手机号
+          
+    optional unit64 exp = 30; //经验值
+    
+    required uint64 reg_time = 40;   //注册时间戳
+    required bool is_valid = 42;     //帐号是否有效
+}
+
+//用户请求参数
+message UserReq {
+	optional Operate type = 1;
+	repeated UserProperty user = 1;
+}
+
+//用户响应参数
+message UserResp {
+	repeated UserProperty user = 1;
+}

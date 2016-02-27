@@ -1,0 +1,54 @@
+// Server to mobile & 盒子
+// @desc 交互协议第一版 v0.1
+// @author allenlinrui@qq.com
+// @time 2015-02-01
+
+import "room.proto";
+import "user.proto";
+import "match.proto";
+//import "device.proto";
+
+pacakage amps;
+
+//业务类型枚举
+enum BusiType {
+	KEEP_ALIVE = 0;    //终端心跳维持
+    ROOM = 10;         //房间业务逻辑
+	USER = 20;         //用户业务逻辑
+	GAME = 30;         //比赛业务逻辑
+	DEVICE = 40;       //机器设备，赛道
+}
+
+//业务操作枚举
+enum Operate {
+	CREATE = 0;            //创建
+	RETRIEVE_ALL = 10;     //读取数据-ALL
+	RETRIEVE_BY_ID = 11;   //读取数据-ID
+	UPDATE = 50;           //更新数据
+	DELETE = 60;           //删除数据
+}
+
+//错误码的枚举
+enum ErrorCode {
+    SUCCESS = 0;    //成功
+    FAIL = -1;      //失败
+}
+
+//Request
+message MainReq {
+	required BusiType req_type = 1;    //请求业务类型
+    optional RoomReq room_req = 2;     //房间
+    optional MatchReq match_req = 3;   //比赛
+    optional UserReq user_req = 4;     //用户
+}
+
+//Response
+message MainResp {
+	required BusiType resp_type = 1;   //对应业务类型的返回结构
+	optional RoomResp room_resp = 2;   //房间队列
+    optional MatchResp match_resp = 3; //比赛队列
+    optional UserResp user_resp = 4;   //用户队列
+
+	required bool ret = 20;            //业务请求成功或者失败
+	required ErrorCode err_code = 30;  //错误码，成功则为0
+}

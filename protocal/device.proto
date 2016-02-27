@@ -1,0 +1,38 @@
+// 场馆及一切硬件设备属性协议
+// @author allenlinrui@qq.com
+// @time 2015-02-01
+
+pacakage amps;
+
+// 
+message 赛道属性 {
+	message 摄像头 {
+		optional string id = 1;
+		optional uint8 type = 2;	//摄像头类型：0 拍人 / 1 拍箭靶
+		//optional string passwd = 2;	// md5( /)
+		optional string push_live_url = 1;
+		optional string pull_live_url = 2;
+	}
+	
+	optional string id   ;
+	repeated 摄像头 device_id	= 3;	// 所有的摄像头ID
+	optional string title;
+	optional string 所属场馆ID;
+	... 
+}
+
+message 场馆属性 {
+	optional string id ;
+	optional string name ;
+	...
+	repeated 赛道属性  所有赛道 = 1;
+}
+
+message 场馆Req {
+
+} 
+
+message 场馆Resp {
+	repeated 场馆属性 所有场馆 = 1;
+} oomProperty room = 1;
+}

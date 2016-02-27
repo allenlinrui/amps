@@ -1,0 +1,24 @@
+// 一场比赛的属性协议
+// @author allenlinrui@qq.com
+// @time 2015-02-01
+
+pacakage amps;
+
+//比赛属性
+message MatchProperty {
+	optional uint64 id = 1;    //ID
+	optional string title = 2;
+    optional string live_stream_url = 3;    //直播视频流url
+    optional string live_stream_token = 4;  //直播视频token
+}
+
+//比赛请求参数
+message MatchReq {
+	optional Operate type = 1;
+	repeated RoomProperty room = 1;
+}
+
+//比赛响应参数
+message MatchResp {
+	repeated RoomProperty room = 1;
+}

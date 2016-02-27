@@ -1,0 +1,29 @@
+// 房间属性协议
+// @author allenlinrui@qq.com
+// @time 2015-02-01
+
+pacakage amps;
+
+//房间属性
+message RoomProperty {
+	optional uint64 id = 1;            //ID
+	optional string title = 1;         //房间标题
+	optional bool 单人模式玩美300 = 2;  //
+	optional uint8 rounds = 3;
+	optional uint8 shoots = 4;
+	optional uint32 time_limit = 5;
+	optional bool 乱斗 = 6;
+	optional bool 围观 = 7;
+	optional string creator_id = 8;
+}
+
+//房间请求参数
+message RoomReq {
+	optional Operate type = 1;
+	repeated RoomProperty room = 1;
+}
+
+//房间响应参数
+message RoomResp {
+	repeated RoomProperty room = 1;
+}
