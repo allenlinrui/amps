@@ -4,12 +4,37 @@
 
 pacakage amps;
 
+//比赛状态
+enum MatchState {
+    INIT = 0;   //初始化
+    READY = 1;  //准备中（倒计时）
+    START = 2;  //比赛中
+    WAIT_FOR_SCORE = 3; //等待记分（倒计时）
+    SCORE = 4;  //记分
+    DONE = 5;   //结束
+    SHARE_RESULT = 6;   //分享
+    COUNT = 7;  //状态数
+}
+
 //比赛属性
 message MatchProperty {
 	optional uint64 id = 1;    //ID
 	optional string title = 2;
     optional string live_stream_url = 3;    //直播视频流url
     optional string live_stream_token = 4;  //直播视频token
+    
+    optional MatchState cur_state = 10; //比赛状态
+    optional MatchState netx_state = 11; //比赛状态
+    
+    repeated RoundInfo round = 20;  //比赛中的轮
+    
+    optional final_score = 30;  //最终总分
+}
+
+//轮属性
+Message RoundInfo {
+    optional uint32 round_num = 1;  //第几轮
+    optional uint32 score = 10; //本轮得分
 }
 
 //比赛请求参数
