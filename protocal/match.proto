@@ -18,10 +18,34 @@ enum MatchState {
 
 //比赛属性
 message MatchProperty {
+    
+    //直播频道
+    message LiveChannel {
+        
+        //上传流信息
+        message UpStream {
+            optional string src_name = 1;   //直播源名称 “RTMP”
+            optional string src_id = 2;     //ID
+            optional string src__type = 3;  //直播源类型 “1”
+            optional string url = 4;        //直播源上行URL
+        }
+        
+        optional string id = 1;     //直播频道ID
+        optional string name = 2;   //直播频道ID
+        optional string desc = 3;   //频道描述
+        optional string status = 4; //频道状态
+        optional UpStream up_stream = 5;   //上传流信息
+        optional string hls_downstream_url = 6; //直播信息拉取URL（HLS）
+        optional string rtmp_downstream_url = 7; //直播信息拉取URL（RTMP）
+        optional string player_id = 8;
+        optional string resolution = 9;
+        optional string password = 10;
+    }
+
 	optional uint64 id = 1;    //ID
 	optional string title = 2;
-    optional string live_stream_url = 3;    //直播视频流url
-    optional string live_stream_token = 4;  //直播视频token
+
+    optional LiveChannel live_channel = 5;  //直播信息
     
     optional MatchState cur_state = 10; //比赛状态
     optional MatchState netx_state = 11; //比赛状态
