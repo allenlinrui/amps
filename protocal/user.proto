@@ -2,7 +2,7 @@
 // @author allenlinrui@qq.com
 // @time 2015-02-01
 
-pacakage amps;
+package amps;
 
 //用户属性
 message UserProperty {

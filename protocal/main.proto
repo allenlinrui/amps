@@ -8,7 +8,7 @@ import "user.proto";
 import "match.proto";
 //  import "device.proto";
 
-pacakage amps;
+package amps;
 
 //业务类型枚举
 enum BusiType {

@@ -2,7 +2,7 @@
 // @author allenlinrui@qq.com
 // @time 2015-02-01
 
-pacakage amps;
+package amps;
 
 //比赛状态
 enum MatchState {
@@ -45,7 +45,7 @@ message MatchProperty {
 	optional uint64 id = 1;    //ID
 	optional string title = 2;
 
-    optional LiveChannel live_channel = 5;  //直播信息
+    repeated LiveChannel live_channels = 5;  //直播信息
     
     optional MatchState cur_state = 10; //比赛状态
     optional MatchState netx_state = 11; //比赛状态
