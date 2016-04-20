@@ -48,7 +48,7 @@ TCPPool = function (name, options, stat, is_complete) {
 };
 
 
-//建立一个新的client
+//建立一个新的client  
 TCPPool.prototype.create_new_client = function() {
     var client = new tcp_client.TCPClient(this.options.socket_idx++, this);
     
