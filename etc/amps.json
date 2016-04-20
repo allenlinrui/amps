@@ -1,0 +1,27 @@
+{
+	"server" : {
+		"tcp" : {
+			"port" : 8043,
+			"time_out" : 10000,
+		}
+	},
+
+	"logger": {
+		"type" : "clusterd",
+            		"appenders": [
+			{
+                    			"type": "file",
+                    			"filename": "./log/amps.log",
+                    			"maxLogSize": 1000000,
+                    			"backups": 1,
+                    			"category": "server_log"
+                		},{
+                    			"type": "file",
+                    			"filename": "./log/amps_statistics.log",
+                    			"maxLogSize": 1000000,
+                    			"backups": 1,
+                    			"category": "statistics"
+                		}
+            		]
+        	}
+}

@@ -1,0 +1,27 @@
+{
+  "name": "amps",
+  "version": "1.0.0",
+  "description": "古美路广场舞",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenlinrui/amps.git"
+  },
+  "keywords": [
+    "amps"
+  ],
+  "author": "allenlinrui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allenlinrui/amps/issues"
+  },
+  "homepage": "https://github.com/allenlinrui/amps#readme",
+  "dependencies": {
+    "express": "~4.13.4",
+    "log4js": "~0.6.32",
+    "protobufjs": "~5.0.1"
+  }
+}

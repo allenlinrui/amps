@@ -2,25 +2,25 @@
 // @author allenlinrui@qq.com
 // @time 2015-02-01
 
-pacakage amps;
+package amps;
 
 //房间属性
 message RoomProperty {
-	optional uint64 id = 1;            //ID
-	optional string title = 1;         //房间标题
-	optional bool 单人模式玩美300 = 2;  //
-	optional uint8 rounds = 3;
-	optional uint8 shoots = 4;
-	optional uint32 time_limit = 5;
-	optional bool 乱斗 = 6;
-	optional bool 围观 = 7;
-	optional string creator_id = 8;
+	optional uint64 id 			= 1; //ID
+	optional string title 			= 2; //房间标题
+	optional bool single_mode_with_300 	= 3; //单人模式玩美300
+	optional uint32 rounds 		= 4;
+	optional uint32 shoots 			= 5;
+	optional uint32 time_limit 		= 6;
+	optional bool no_seq_pk		= 7; //乱斗
+	optional bool onlooker_mode		= 8; //围观模式
+	optional string creator_id 		= 9;
 }
 
 //房间请求参数
 message RoomReq {
-	optional Operate type = 1;
-	repeated RoomProperty room = 1;
+	optional Operate type 		= 1;
+	repeated RoomProperty room  = 2;
 }
 
 //房间响应参数
