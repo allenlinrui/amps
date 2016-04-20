@@ -17,6 +17,7 @@ enum BusiType {
     USER                = 20; //用户业务逻辑
     GAME               = 30; //比赛业务逻辑
     DEVICE             = 40; //机器设备，赛道
+    UNKNOWN      = 100;
 }
 
 //业务操作枚举

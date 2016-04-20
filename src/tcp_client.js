@@ -41,8 +41,8 @@ function Main() {
 			case '2' :
 				var msg = CreatePbMsg();
 				console.log("send mock room msg. pb date = ${msg}");
-				console.log(msg);
-				client.write(new Buffer(msg.encode().toArrayBuffer()));
+				var tmp = msg.encode().toArrayBuffer();
+				client.write(new Buffer(tmp));
 				break;
 			case '3' :
 				console.log("send mock user msg.");
@@ -61,7 +61,7 @@ function CreatePbMsg() {
 	MainReq = pb_builder.build("amps.MainReq");
 	req = new MainReq(
 		{
-			"req_type" : "DEVICE",
+			"req_type" : "ROOM",
 			"room_req" : {
 				"type" : "RETRIEVE_BY_ID",
 				"room" : [

@@ -29,9 +29,9 @@ var requires = {
 
 // load useful module
 try {
-    //var config = require("./etc/config.json");
-    var tcp_server = require("./tcp_server")(requires);
-    tcp_server.Start;
+    var config = require("../etc/amps.json");
+    var tcp_server = require("./tcp_server.js")(requires);
+    tcp_server.tcp_server_.Start();
 } catch(err) {
     console.log(`require module fail: ${err}`);
     //logger.error(`require module fail: ${err}`);

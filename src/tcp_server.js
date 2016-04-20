@@ -1,7 +1,10 @@
 // tcp server
 // allen
 // 2016-03-01
-var TCPSERVER; //server var
+var TCPSERVER = { 
+    Start : null
+}; //server var
+
 var inner_requires; //depen var
 
 var proto_buf;
@@ -13,7 +16,7 @@ var timeout = 10000;    //10 sec
 
 // pb 
 var pb_builder;
-var amps
+var amps;
 
 function OnRequestMsg(socket) {
     var main_req = amps.main_req;
@@ -21,7 +24,7 @@ function OnRequestMsg(socket) {
         if (flags.binary) {
             try {
                 // Decode the Message
-                var msg = main_req.decode(new buffer(data));
+                var msg = main_req.decode(data);
                 console.log("Received: "+msg.text);
                 
                 // Transform the text to upper case
@@ -42,20 +45,77 @@ function OnRequestMsg(socket) {
 // Process Data
 function OnRequestData(socket) {
     return function (data) {
-        console.log("[data]=", data);
-        if(data.trim().toLowerCase() === 'quit') {
-            this.write("connection over .");
-            socket.end();
+        try {
+            //received and decode
+            var msg = amps.MainReq.decode(new Buffer(data));
+            console.log("Received: ");
+            console.info(msg);
 
-            //server.close();
-        } else {
-            socket.write("reviced .");
+            // do business
+            var result = ProcessBusiLogic(msg);
+            console.log("Sended: ");
+            console.info(result);
+            socket.write(new Buffer(result.encode().toArrayBuffer()));
+        } catch (err) {
+            console.log("Processing reviced data failed : ", err);
         }
+        return;
     } // function
 }
 
-// 消息处理
+// 业务处理
+function ProcessBusiLogic(req) {
+    // return msg
+    var main_resp = new amps.MainResp();
+
+    // check for req
+    if(req instanceof amps.MainReq) {
+        var busi_type = req.get('req_type');
+
+        switch(busi_type) {
+            case amps.BusiType.KEEP_ALIVE :
+                console.log("busi keep alive request .");
+                break;
+
+            case amps.BusiType.ROOM :
+                console.log("busi room request .");
+                break;
+            
+            case amps.BusiType.USER :
+                console.log("busi user request .");
+                break;
+            
+            case amps.BusiType.GAME :
+                console.log("busi gmae request .");
+                break;
+            
+            case amps.BusiType.DEVICE :
+                console.log("busi device request .");
+                break;
+            
+            case amps.BusiType.UNKNOWN :
+            default :
+                console.log("error request .");
+                break;
+        }
+
+        main_resp.set('resp_type' , busi_type);
+        main_resp.set('ret' , true);
+        main_resp.set('err_code' , 'SUCCESS');
+    } else {
+        main_resp.set('resp_type' , 'UNKNOWN');
+        main_resp.set('ret' , false);
+        main_resp.set('err_code' , 'FAIL');
+    }
+
+    return main_resp;
+}
+
+// TCP Package处理
 function ProcessMsg(data) {
+    //head
+
+    //boody
     
 }
 
@@ -84,18 +144,20 @@ function OnConnect(server) {
         //socket.end();
         //tcp_server.close();
     }
-}
+};
 
 // RUN
 TCPSERVER.Start = function() {
+    //pb builder
+    try {
+        pb_builder = proto_buf.loadProtoFile("../protocal/main.proto");
+        amps = pb_builder.build("amps");
+    } catch (err) {
+        throw new Error(`[tcp_server] pb error: ${err}`);
+    }
+
     var tcp_server = net.createServer();
     tcp_server.listen(port);
-
-    //tcp接收缓冲区
-    this.buffer = new Buffer(4094);
-
-    //事件
-    this.emitter = new requires.MyEmitter();
 
     tcp_server.on('listening',
         function () {
@@ -116,15 +178,7 @@ TCPSERVER.Start = function() {
     );
 
     tcp_server.on('connection', OnConnect(tcp_server));
-
-    //pb builder
-    try {
-        pb_builder = proto_buf.loadProtoFile("../protocal/main.proto");
-        amps = pb_builder.build("amps");
-    } catch (err) {
-        throw new Error(`[tcp_server] pb error: ${err}`);
-    }
-}
+};
 
 //重新建立连接
 //TCPSERVER.prototype.reconnect = function() {
@@ -153,15 +207,15 @@ TCPSERVER.Start = function() {
 
 module.exports = function (options) {
     //========= 引入依赖对象 =========
-    if(!options.proto_buf) {
+    if(!options.proto_buf_) {
         throw new Error("[tcp_server] Options.proto_buf is required");
     }
 
-    if(!options.net) {
+    if(!options.net_) {
         throw new Error("[tcp_server] Options.net is required");
     }
 
-    if(!options.logger) {
+    if(!options.log4js_) {
         throw new Error("[tcp_server] Options.logger is required");
     }
 
@@ -171,6 +225,6 @@ module.exports = function (options) {
     log = inner_requires.log4js_;
 
     return {
-        tcp_server : TCPSERVER
+        tcp_server_ : TCPSERVER
     };
-}
+};
